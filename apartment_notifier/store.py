@@ -28,15 +28,18 @@ class JsonFileStore:
 
     def set_onlinerby_seen_ids(self, seen_ids):
         self.data['onlinerby_seen_ids'] = list(seen_ids)
+        self.save()
 
     def get_onlinerby_url(self):
         return self.data.get('onlinerby_url')
 
     def set_onlinerby_url(self, url):
         self.data['onlinerby_url'] = url
+        self.save()
 
     def get_telegram_chat_id(self):
         return self.data.get('telegram_chat_id')
 
     def set_telegram_chat_id(self, value):
         self.data['telegram_chat_id'] = value
+        self.save()

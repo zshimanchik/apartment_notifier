@@ -4,7 +4,6 @@ from apartment_notifier import settings
 from apartment_notifier.store import JsonFileStore
 
 
-
 if __name__ == '__main__':
     store, _created = JsonFileStore.load_or_create(settings.store)
     commands = {
@@ -20,5 +19,4 @@ if __name__ == '__main__':
     print(args)
     command = commands.get(args.command)
     command(args.value)
-    store.save()
     print('Done')
