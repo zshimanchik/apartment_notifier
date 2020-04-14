@@ -15,7 +15,8 @@ logging.config.dictConfig(settings.LOGGING)
 @app.route('/cron/check_apartments')
 def check_apartments():
     _LOGGER.info("Starting Runner...")
-    user = store.get(0)
-    runner = Runner(settings, user)
-    runner.run()
+    for user in store.all():
+        _LOGGER.info("Starting runner for %s", user)
+        runner = Runner(settings, user)
+        runner.run()
     return 'OK'

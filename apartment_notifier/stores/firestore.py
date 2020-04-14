@@ -1,8 +1,9 @@
 from apartment_notifier.models import User
+from apartment_notifier.stores.base import Store
 from apartment_notifier.stores.exceptions import ObjectDoesNotExist
 
 
-class FireStore:
+class FireStore(Store):
     def __init__(self):
         from google.cloud import firestore
         self.db = firestore.Client()
@@ -26,3 +27,9 @@ class FireStore:
     def save(self, instance: User):
         data = instance.to_dict()
         self.db.collection('users').document(str(instance.pk)).set(data)
+
+    def all(self):
+        for document_snapshot in self.db.collection('users').stream():
+            data = document_snapshot.to_dict()
+            data['store'] = self
+            yield User.from_dict(data)
