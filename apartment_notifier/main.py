@@ -1,5 +1,4 @@
-import logging
-import sys
+import logging.config
 
 from apartment_notifier import settings
 from apartment_notifier.notifiers.print import PrintNotifier
@@ -70,10 +69,7 @@ class Runner:
 
 
 if __name__ == '__main__':
-    LOG_FORMAT = '%(asctime)s [%(name)s:%(lineno)-3d] %(levelname)-7s: %(message)s'
-    logging.basicConfig(level=logging.WARNING, format=LOG_FORMAT, stream=sys.stdout)
-    logging.getLogger('__main__').setLevel(logging.DEBUG)
-    logging.getLogger('apartment_notifier').setLevel(logging.DEBUG)
+    logging.config.dictConfig(settings.LOGGING)
     store = JsonFileStore.load_or_create(settings.store)[0]
     runner = Runner(settings, store)
     runner.run()
