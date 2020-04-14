@@ -19,16 +19,16 @@ class Runner:
 
     def _init_parsers(self):
         _LOGGER.debug('Initializing parsers')
-        if not store.get_onlinerby_url():
+        if not self.store.get_onlinerby_url():
             raise RuntimeError('"onlinerby_url" is not set in store')
         self.parsers = [
-            OnlinerbyParser(store.get_onlinerby_url())
+            OnlinerbyParser(self.store.get_onlinerby_url())
         ]
         _LOGGER.info('Parsers: %s', self.parsers)
 
     def _init_filters(self):
         _LOGGER.debug('Initializing filters')
-        onliner_seen_ids = set(store.get_onlinerby_seen_ids())
+        onliner_seen_ids = set(self.store.get_onlinerby_seen_ids())
         self.filters = [
             lambda apartment: apartment.source == OnlinerbyParser.NAME and apartment.source_id not in onliner_seen_ids,
         ]
@@ -37,10 +37,10 @@ class Runner:
     def _init_notifiers(self):
         _LOGGER.debug('Initializing notifiers')
         self.notifiers = []
-        if settings.print_notifier:
+        if self.settings.print_notifier:
             self.notifiers.append(PrintNotifier())
-        if store.get_telegram_chat_id():
-            self.notifiers.append(TelegramNotifier(settings.telegram_api_key, store.get_telegram_chat_id()))
+        if self.store.get_telegram_chat_id():
+            self.notifiers.append(TelegramNotifier(self.settings.telegram_api_key, self.store.get_telegram_chat_id()))
         _LOGGER.info('Notifiers: %s', self.notifiers)
 
     def run(self):
