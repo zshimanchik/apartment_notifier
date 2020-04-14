@@ -1,6 +1,7 @@
 import logging
 from urllib.parse import urlparse, parse_qs
 
+import arrow
 import requests
 
 from apartment_notifier.models import Apartment
@@ -54,6 +55,6 @@ class OnlinerbyParser:
             item['price']['amount'],
             item['price']['currency'],
             item['url'],
-            item['created_at'],
-            item['last_time_up'],
+            arrow.get(item['created_at']),
+            arrow.get(item['last_time_up']),
         )

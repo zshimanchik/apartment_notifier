@@ -27,8 +27,8 @@ class TelegramNotifier:
             message = (
                 f'Адрес: {apartment.location}\n'
                 f'Цена: {apartment.price} {apartment.price_currency}\n'
-                f'Дата обновления: {apartment.last_time_up}\n'
-                f'Дата создания: {apartment.created_at}\n'
+                f'Дата обновления: {apartment.last_time_up_humanized}\n'
+                f'Дата создания: {apartment.created_at_humanized}\n'
                 f'Фото: {apartment.photo}\n'
                 f'Ссылка: {apartment.link}'
             )
