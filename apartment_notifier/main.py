@@ -1,5 +1,7 @@
 import logging.config
 
+import arrow
+
 from apartment_notifier import settings
 from apartment_notifier.notifiers.print import PrintNotifier
 from apartment_notifier.notifiers.telegram import TelegramNotifier
@@ -28,10 +30,10 @@ class Runner:
 
     def _init_filters(self):
         _LOGGER.debug('Initializing filters')
-        onliner_seen_ids = set(self.store.get_onlinerby_seen_ids())
-        self.filters = [
-            lambda apartment: apartment.source == OnlinerbyParser.NAME and apartment.source_id not in onliner_seen_ids,
-        ]
+        self.filters = []
+        last_check_datetime = self.store.get_last_check_datetime()
+        if last_check_datetime is not None:
+            self.filters.append(lambda apartment: apartment.last_time_up >= last_check_datetime)
         _LOGGER.info('Filters: %s', self.filters)
 
     def _init_notifiers(self):
@@ -45,6 +47,7 @@ class Runner:
 
     def run(self):
         _LOGGER.info("Starting...")
+        current_check_datetime = arrow.now()
         new_apartments = []
         total_apartment_amount = 0
 
@@ -62,9 +65,7 @@ class Runner:
             notifier.notify(new_apartments)
 
         _LOGGER.info("Saving results")
-        onliner_seen_ids = self.store.get_onlinerby_seen_ids()
-        onliner_seen_ids.extend(apartment.source_id for apartment in new_apartments)
-        self.store.set_onlinerby_seen_ids(onliner_seen_ids)
+        self.store.set_last_check_datetime(current_check_datetime)
         _LOGGER.info('Finished...')
 
 

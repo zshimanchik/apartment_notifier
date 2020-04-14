@@ -1,5 +1,8 @@
 import json
 
+import arrow
+from arrow import Arrow
+
 
 class JsonFileStore:
     def __init__(self, data, filename):
@@ -28,6 +31,14 @@ class JsonFileStore:
 
     def set_onlinerby_seen_ids(self, seen_ids):
         self.data['onlinerby_seen_ids'] = list(seen_ids)
+        self.save()
+
+    def get_last_check_datetime(self) -> Arrow:
+        value = self.data.get('last_check_datetime')
+        return arrow.get(value) if value else value
+
+    def set_last_check_datetime(self, value: Arrow):
+        self.data['last_check_datetime'] = value.isoformat()
         self.save()
 
     def get_onlinerby_url(self):
