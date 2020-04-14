@@ -9,6 +9,7 @@ if __name__ == '__main__':
     store, _created = JsonFileStore.load_or_create(settings.store)
     commands = {
         'set_onlinerby_url': store.set_onlinerby_url,
+        'set_telegram_chat_id': store.set_telegram_chat_id,
     }
 
     parser = argparse.ArgumentParser(add_help=False)

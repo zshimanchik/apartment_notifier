@@ -2,12 +2,12 @@ import logging
 import sys
 
 from apartment_notifier import settings
-from apartment_notifier.notifiers import PrintNotifier
+from apartment_notifier.notifiers.print import PrintNotifier
+from apartment_notifier.notifiers.telegram import TelegramNotifier
 from apartment_notifier.parsers.onlinerby import OnlinerbyParser
 from apartment_notifier.store import JsonFileStore
 
 _LOGGER = logging.getLogger(__name__)
-
 
 
 def main():
@@ -28,7 +28,8 @@ def main():
     ]
 
     notifiers = [
-        PrintNotifier()
+        PrintNotifier(),
+        TelegramNotifier(settings.telegram_api_key, store.get_telegram_chat_id())
     ]
 
     new_apartments = []

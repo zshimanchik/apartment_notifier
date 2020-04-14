@@ -35,3 +35,8 @@ class JsonFileStore:
     def set_onlinerby_url(self, url):
         self.data['onlinerby_url'] = url
 
+    def get_telegram_chat_id(self):
+        return self.data.get('telegram_chat_id')
+
+    def set_telegram_chat_id(self, value):
+        self.data['telegram_chat_id'] = value

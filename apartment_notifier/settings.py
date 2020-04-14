@@ -1,2 +1,4 @@
+import os
 
-store = 'store.json'
+store = os.environ['STORE']
+telegram_api_key = os.environ['TELEGRAM_API_KEY']
