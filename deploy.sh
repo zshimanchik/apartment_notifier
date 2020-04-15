@@ -9,4 +9,5 @@ export $(cat "$PROD_ENV_FILE")
 echo ${PATH}
 envsubst < app.templ.yaml > app.yaml
 gcloud --quiet app deploy app.yaml
+gcloud --quiet app deploy cron.yaml
 rm app.yaml

@@ -1,0 +1,4 @@
+cron:
+- description: "Regular scrapper check"
+  url: /cron/check_apartments
+  schedule: every 3 hours
