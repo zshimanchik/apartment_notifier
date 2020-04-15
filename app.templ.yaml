@@ -2,6 +2,7 @@ runtime: python37
 
 env_variables:
   TELEGRAM_API_KEY: "${TELEGRAM_API_KEY}"
+  EXCLUDE_LOG_TIME: "${EXCLUDE_LOG_TIME}"
 
 handlers:
   - url: .*
