@@ -1,0 +1,9 @@
+runtime: python37
+
+env_variables:
+  TELEGRAM_API_KEY: "${TELEGRAM_API_KEY}"
+
+handlers:
+  - url: .*
+    secure: always
+    script: auto

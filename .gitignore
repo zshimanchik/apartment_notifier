@@ -1,7 +1,10 @@
 /.idea/
+/.git/
 /venv/
 *.py[cod]
 __pycache__
 store.json
 /development.env
 /development.json
+/prod.env
+/app.yaml

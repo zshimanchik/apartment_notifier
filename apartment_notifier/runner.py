@@ -7,7 +7,6 @@ from apartment_notifier.models import User
 from apartment_notifier.notifiers.print import PrintNotifier
 from apartment_notifier.notifiers.telegram import TelegramNotifier
 from apartment_notifier.parsers.onlinerby import OnlinerbyParser
-from apartment_notifier.stores import JsonFileStore, FireStore, ObjectDoesNotExist
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -72,6 +71,7 @@ class Runner:
 
 
 if __name__ == '__main__':
+    from apartment_notifier.stores import JsonFileStore, FireStore, ObjectDoesNotExist
     logging.config.dictConfig(settings.LOGGING)
     # store = JsonFileStore(settings.store)
     store = FireStore()
