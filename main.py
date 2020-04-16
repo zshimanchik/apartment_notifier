@@ -145,6 +145,19 @@ def set_onliner(api: TelegramBotApi, update):
     api.send_message(chat_id, message)
 
 
+@bot.command('/feedback', '/feedback <пожелания, угрозы, предложения> - Отправлю что напишешь хуману')
+def feedback(api: TelegramBotApi, update):
+    _LOGGER.info('/feedback')
+    text = update['message']['text'].strip()
+    if text == '/feedback':
+        api.send_message(update['message']['chat']['id'], 'Напиши текст в самой команде, например:\n'
+                                                          '/feedback надо бы добавить блекджек и еще чего-нибудь')
+    else:
+        message = f'From: {update["message"]["from"]}\nText: {update["message"]["text"]}'
+        api.send_message(settings.admin_chat_id, message)
+        api.send_message(update['message']['chat']['id'], 'Отправил.')
+
+
 @bot.fallback
 def fallback(api: TelegramBotApi, update):
     _LOGGER.info('fallback')

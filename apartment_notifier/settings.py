@@ -6,6 +6,7 @@ telegram_api_key = os.environ['TELEGRAM_API_KEY']
 telegram_webhook_token = os.environ['TELEGRAM_WEBHOOK_TOKEN']
 print_notifier = os.environ.get('PRINT_NOTIFIER', 'false').lower() in _TRUE_LIST
 exclude_log_time = os.environ.get('EXCLUDE_LOG_TIME', 'false').lower() in _TRUE_LIST
+admin_chat_id = os.environ['ADMIN_CHAT_ID']
 
 
 LOGGING = {
