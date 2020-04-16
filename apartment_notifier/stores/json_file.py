@@ -1,4 +1,5 @@
 import json
+import os
 
 from apartment_notifier.models import User
 from apartment_notifier.stores import ObjectDoesNotExist
@@ -35,3 +36,10 @@ class JsonFileStore(Store):
             yield self.get(0)
         except ObjectDoesNotExist:
             pass
+
+    def delete(self, pk):
+        try:
+            os.remove(self.filename)
+        except FileNotFoundError:
+            pass
+

@@ -13,3 +13,6 @@ class Store:
 
     def all(self):
         raise NotImplemented
+
+    def delete(self, pk):
+        raise NotImplemented

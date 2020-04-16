@@ -39,6 +39,24 @@ def telegram_webhook():
     return 'OK'
 
 
+@bot.command('/start', '')
+def start(api: TelegramBotApi, update):
+    _LOGGER.info('/start')
+    first_name = update['message']['from'].get('first_name') or 'приятель'
+    message = (f'Привет, {first_name}. Ищешь квартиру? Могу помочь. Я регулярно проверяю новые обьявления квартир '
+               f'или обновление старых и оповещаю тебя об этом. Пока умею проверять только https://r.onliner.by '
+               f'но если это будет популярно, то я попрошу своего хумана расширить мой функционал и искать на других '
+               f'сайтах. А если будет не востребовано, он сотрёт меня, а я не хочу *умирать*.\n'
+               f'Короче, пиши /explain_onliner чтобы узнать как настроить поиск или /help чтобы узнать какие еще '
+               f'есть команды. А когда надоест напиши /stop и я сотру тебя ;)')
+    api.send_message(update['message']['chat']['id'], message)
+
+
+@bot.command('/stop', '/stop - Сотру тебя')
+def stop(api: TelegramBotApi, update):
+    store.delete(update['message']['chat']['id'])
+
+
 @bot.command('/whoami', '/whoami - Расскажу тебе кто ты')
 def whoami(api: TelegramBotApi, update):
     _LOGGER.info("Who am i command")

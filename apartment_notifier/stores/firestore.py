@@ -33,3 +33,6 @@ class FireStore(Store):
             data = document_snapshot.to_dict()
             data['store'] = self
             yield User.from_dict(data)
+
+    def delete(self, pk):
+        self.db.collection('users').document(str(pk)).delete()
