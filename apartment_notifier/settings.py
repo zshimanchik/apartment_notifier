@@ -30,7 +30,15 @@ LOGGING = {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
+        'main': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
         'apartment_notifier': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+        'telegram_bot_mini': {
             'handlers': ['console'],
             'level': 'DEBUG',
         },
