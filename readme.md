@@ -21,6 +21,7 @@ Snippet to generate token
 import random, string; print(''.join(random.choices(string.ascii_letters+string.digits, k=40)))
 ```
  
+0. Install `gettext` to have `envsubst` command
 0. Run `deploy.sh`
 0. Derive your app url. 
 Example via console: `gcloud app describe --format=json | jq -r '.defaultHostname'`
