@@ -195,7 +195,7 @@ def die(api, update):
     # raise Exception("lol")
 
 
-bot.generate_and_add_help_command()
+bot.generate_and_add_help_command('Доступные команды:', '/help - выводит это меню')
 
 
 if __name__ == '__main__':
