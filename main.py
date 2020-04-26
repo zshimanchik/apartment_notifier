@@ -26,8 +26,11 @@ def check_apartments():
     _LOGGER.info("Starting Runner...")
     for user in store.all():
         _LOGGER.info("Starting runner for %s", user)
-        runner = Runner(settings, user)
-        runner.run()
+        try:
+            runner = Runner(settings, user)
+            runner.run()
+        except Exception as ex:
+            _LOGGER.exception('There was exception during running for user %s. Error: %s', user, ex, exc_info=ex)
     return 'OK'
 
 
