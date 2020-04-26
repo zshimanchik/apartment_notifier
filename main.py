@@ -45,6 +45,8 @@ def telegram_webhook():
 @bot.command('/start', '')
 def start(api: TelegramBotApi, update):
     _LOGGER.info('/start')
+    api.send_message(settings.admin_chat_id, f'New user: {update}')
+
     first_name = update['message']['from'].get('first_name') or 'приятель'
     message = (f'Привет, {first_name}. Ищешь квартиру? Могу помочь. Я регулярно проверяю новые обьявления квартир '
                f'или обновление старых и оповещаю тебя об этом. Пока умею проверять только https://r.onliner.by '
