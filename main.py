@@ -122,6 +122,7 @@ def set_onliner(api: TelegramBotApi, update):
     _LOGGER.debug('args: %s', args)
     if len(args) != 2:
         api.send_message(chat_id, "Укажи ссылку: /setonliner <url>")
+        return
 
     api.send_message(chat_id, 'Окей. Проверяю ссылку.')
     onliner_url = args[1]
