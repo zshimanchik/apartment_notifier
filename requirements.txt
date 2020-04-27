@@ -3,4 +3,4 @@ ipython==7.13.0
 Flask==1.1.2
 arrow==0.15.5
 google-cloud-firestore==1.6.2
-git+https://github.com/zshimanchik/telegram_bot_mini
+git+https://github.com/zshimanchik/telegram_bot_mini@1.1.0

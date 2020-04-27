@@ -12,9 +12,10 @@ _LOGGER = logging.getLogger(__name__)
 
 
 class Runner:
-    def __init__(self, settings, user: User):
+    def __init__(self, settings, user: User, tg_bot_api):
         self.settings = settings
         self.user = user
+        self.tg_bot_api = tg_bot_api
         self._init_parsers()
         self._init_filters()
         self._init_notifiers()
@@ -42,7 +43,7 @@ class Runner:
         if self.settings.print_notifier:
             self.notifiers.append(PrintNotifier())
         if self.user.chat_id:
-            self.notifiers.append(TelegramNotifier(self.settings.telegram_api_key, self.user.chat_id))
+            self.notifiers.append(TelegramNotifier(self.tg_bot_api, self.user.chat_id))
         _LOGGER.info('Notifiers: %s', self.notifiers)
 
     def run(self):
@@ -72,6 +73,7 @@ class Runner:
 
 if __name__ == '__main__':
     from apartment_notifier.stores import JsonFileStore, FireStore, ObjectDoesNotExist
+    from telegram_bot_mini.bot_api import TelegramBotApi
     logging.config.dictConfig(settings.LOGGING)
     # store = JsonFileStore(settings.store)
     store = FireStore()
@@ -85,5 +87,6 @@ if __name__ == '__main__':
         user = User(pk, chat_id, onlinerby_url=onlinerby_url, store=store)
         user.save()
     print(user)
-    runner = Runner(settings, user)
+    tg_bot_api = TelegramBotApi(settings.telegram_api_key)
+    runner = Runner(settings, user, tg_bot_api)
     runner.run()

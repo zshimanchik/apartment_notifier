@@ -10,7 +10,7 @@ from apartment_notifier.parsers.onlinerby import OnlinerbyParser
 from apartment_notifier.runner import Runner
 from apartment_notifier.stores import FireStore
 from telegram_bot_mini.bot import Bot
-from telegram_bot_mini.bot_api import TelegramBotApi
+from telegram_bot_mini.bot_api import TelegramBotApi, BotWasBlockedException
 
 _LOGGER = logging.getLogger(__name__)
 app = Flask(__name__)
@@ -27,8 +27,11 @@ def check_apartments():
     for user in store.all():
         _LOGGER.info("Starting runner for %s", user)
         try:
-            runner = Runner(settings, user)
+            runner = Runner(settings, user, bot_api)
             runner.run()
+        except BotWasBlockedException:
+            _LOGGER.info('Bot was blocked by user: %s', user.chat_id)
+            store.delete(user.pk)
         except Exception as ex:
             _LOGGER.exception('There was exception during running for user %s. Error: %s', user, ex, exc_info=ex)
     return 'OK'
